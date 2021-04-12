@@ -36,8 +36,9 @@ public class Instructor {
 	@JoinColumn(name="instructor_detail_id")
 	private InstructorDetail instructorDetail;
 	
-	@OneToMany(mappedBy="instructor", cascade= {CascadeType.DETACH, CascadeType.MERGE, 
-			CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToMany(mappedBy="instructor",
+			   cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+						 CascadeType.DETACH, CascadeType.REFRESH})
 	private List<Course> courses;
 	
 	public Instructor() {
@@ -97,19 +98,20 @@ public class Instructor {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-
-	public void addCourse(Course tempCourse) {
+	
+	// add convenience methods for bi-directional relationship
+	
+	public void add(Course tempCourse) {
 		
 		if (courses == null) {
-			
 			courses = new ArrayList<>();
-			
 		}
 		
 		courses.add(tempCourse);
 		
 		tempCourse.setInstructor(this);
 	}
+	
 	@Override
 	public String toString() {
 		return "Instructor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
