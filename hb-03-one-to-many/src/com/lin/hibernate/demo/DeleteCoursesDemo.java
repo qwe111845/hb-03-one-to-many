@@ -8,7 +8,7 @@ import com.lin.hibernate.demo.entity.Course;
 import com.lin.hibernate.demo.entity.Instructor;
 import com.lin.hibernate.demo.entity.InstructorDetail;
 
-public class CreateCoursesDemo {
+public class DeleteCoursesDemo {
 
 	public static void main(String[] args) {
 
@@ -24,17 +24,23 @@ public class CreateCoursesDemo {
 		Session session = factory.getCurrentSession();
 		
 		try {
+			System.out.println("Creating new Instruct object...");
 
 			session.beginTransaction();
-			System.out.println("find Course object...");
-
-			int theId = 10;
-			Course tempCourse = session.get(Course.class, theId);
 			
-			 
-			session.delete(tempCourse);
+			int theId = 1;
+			Instructor tempInstructor = session.get(Instructor.class, theId);
+			
+			Course tempCourse1 = new Course("Air Guitar");
+			Course tempCourse2 = new Course("Data structure");
 
-			System.out.println("Deleting the Course...");
+			tempInstructor.add(tempCourse1);
+			tempInstructor.add(tempCourse2);
+
+			session.save(tempCourse1);
+			session.save(tempCourse2);
+
+			System.out.println("Saving the Course...");
 			
 			session.getTransaction().commit();
 			System.out.println("Done!");
